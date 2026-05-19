@@ -1,0 +1,21 @@
+[project]
+name = "pi06-recap-kit"
+version = "0.1.0"
+description = "Open reproduction scaffold for pi0.6-style value-function filtering and advantage-conditioned openpi finetuning."
+requires-python = ">=3.10"
+dependencies = [
+  "torch",
+  "transformers>=4.46",
+  "datasets",
+  "accelerate",
+  "peft",
+  "pyarrow",
+  "pandas",
+  "pillow",
+  "numpy<2",
+  "tqdm",
+  "decord",
+]
+
+[tool.ruff]
+line-length = 120

@@ -1,0 +1,117 @@
+defaults:
+  - model/value@actor.model
+  - training_backend/fsdp@actor.fsdp_config
+  - _self_
+  - override hydra/job_logging: stdout
+
+hydra:
+  run:
+    dir: .
+  output_subdir: null
+  searchpath:
+    - file://${oc.env:REPO_PATH}/examples/sft/config/
+
+cluster:
+  num_nodes: 1
+  component_placement:
+    actor,env,rollout: 0-0
+
+runner:
+  task_type: sft
+  logger:
+    log_path: /nfs_global/S/yangrongzheng/pi05/recap_workspace/logs/recap_value_online
+    project_name: rlinf
+    experiment_name: value_sft_local_pi05_online
+    logger_backends: ["tensorboard"]
+  max_epochs: 30000
+  max_steps: -1
+  val_check_interval: 100
+  save_interval: 500
+
+data:
+  data_root: /nfs_global/S/yangrongzheng/pi05/data
+  tag: local_pi05
+  train_data_paths:
+    - dataset_path: /nfs_global/S/yangrongzheng/pi05/data/lerobot_pick_place
+      type: sft
+      weight: 1.0
+      robot_type: libero
+      model_type: pi05
+      max_samples: null
+    - dataset_path: /nfs_global/S/yangrongzheng/pi05/data/lerobot_pick_place_online
+      type: sft
+      weight: 1.0
+      robot_type: libero
+      model_type: pi05
+      max_samples: null
+      tag: local_pi05_online
+  eval_data_paths:
+    - dataset_path: /nfs_global/S/yangrongzheng/pi05/data/lerobot_pick_place
+      max_samples: 512
+      robot_type: libero
+      model_type: pi05
+    - dataset_path: /nfs_global/S/yangrongzheng/pi05/data/lerobot_pick_place_online
+      max_samples: 128
+      robot_type: libero
+      model_type: pi05
+      tag: local_pi05_online
+  train_num_workers: 0
+  eval_num_workers: 0
+  prefetch_factor: 2
+  persistent_workers: false
+  pin_memory: false
+  include_state: true
+  gamma: 1.0
+  return_min: 0.0
+  return_max: 1.0
+  action_horizon: 10
+  normalize_to_minus_one_zero: true
+  include_next_obs: false
+  action_dim: 12
+  robot_type: libero
+  model_type: pi05
+  balance_weights: true
+  seed: 42
+
+algorithm:
+  adv_type: gae
+
+actor:
+  group_name: ActorGroup
+  training_backend: fsdp
+  micro_batch_size: 8
+  global_batch_size: 32
+  seed: 0
+  model:
+    precision: bf16
+    siglip_path: /nfs_global/S/yangrongzheng/pi05/models/google/siglip2-so400m-patch14-224
+    gemma3_path: /nfs_global/S/yangrongzheng/pi05/models/google/gemma-3-270m
+    tokenizer_path: /nfs_global/S/yangrongzheng/pi05/models/google/gemma-3-270m
+    freeze_vlm: false
+    action_dim: 12
+    action_horizon: 10
+  optim:
+    lr: 5.0e-5
+    value_lr: 1.0e-4
+    adam_beta1: 0.9
+    adam_beta2: 0.95
+    adam_eps: 1.0e-8
+    weight_decay: 1e-10
+    clip_grad: 1.0
+    lr_scheduler: constant
+    lr_warmup_steps: 500
+    total_training_steps: 8000
+  fsdp_config:
+    strategy: fsdp
+    sharding_strategy: no_shard
+    use_orig_params: false
+    gradient_checkpointing: true
+    mixed_precision:
+      param_dtype: ${actor.model.precision}
+      reduce_dtype: ${actor.model.precision}
+      buffer_dtype: ${actor.model.precision}
+
+reward:
+  use_reward_model: false
+critic:
+  use_critic_model: false

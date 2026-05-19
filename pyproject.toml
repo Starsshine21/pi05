@@ -1,0 +1,8 @@
+[project]
+name = "pi05-workspace"
+version = "0.1.0"
+description = "Local pi05/openpi workspace with archived legacy RECAP prototype."
+requires-python = ">=3.10"
+
+[tool.ruff]
+line-length = 120

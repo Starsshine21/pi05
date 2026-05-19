@@ -1,0 +1,52 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local envs and caches
+.conda-*/
+.cache/
+.codex/
+.claude/
+.agents/
+.publish_repo/
+.publish_push/
+.publish_min/
+
+# Logs and local artifacts
+logs/
+*.out
+*.err
+wget-log*
+MUJOCO_LOG.TXT
+
+# Datasets / local model mirrors
+data/
+models/
+
+# Training outputs / checkpoints
+results/
+**/checkpoints/
+**/checkpoint/
+openpi_official/ckpt/
+openpi/checkpoints/
+pi05_sft/
+qam/
+
+# Third-party vendor assets not needed for current PI05 real-robot deployment
+openpi_official/third_party/
+openpi/third_party/
+
+# Large model / checkpoint file types
+*.safetensors
+*.ckpt
+*.pt
+*.distcp
+
+# Editors
+.vscode/
+.idea/

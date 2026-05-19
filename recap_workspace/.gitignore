@@ -1,0 +1,9 @@
+data/
+data_*/
+logs/
+models/
+external/
+.codex/
+.agents/
+*.out
+*.err
