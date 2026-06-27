@@ -3,14 +3,15 @@
 #SBATCH -o /nfs_global/S/yangrongzheng/pi05/logs/pi05-eef-hand-target-%j.out
 #SBATCH -e /nfs_global/S/yangrongzheng/pi05/logs/pi05-eef-hand-target-%j.err
 #SBATCH -p r8nv-gpu-hw
-#SBATCH --qos=gpu-longlong
+#SBATCH --qos=gpu-normal
+#SBATCH -t 1-06:00:00
 #SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --gres=gpu:8
-#SBATCH --cpus-per-task=16
-#SBATCH --mem=128G
-#SBATCH -t 2-00:00:00
+#SBATCH --gres=gpu:4
+#SBATCH --cpus-per-task=8
+#SBATCH --gres-flags=enforce-binding
+#SBATCH --exclude=r8a100-a02,r8a100-a03
 #SBATCH --constraint=L40S|A100
+
 set -euo pipefail
 ROOT=/nfs_global/S/yangrongzheng/pi05
 OPENPI_ROOT="$ROOT/openpi_official"
