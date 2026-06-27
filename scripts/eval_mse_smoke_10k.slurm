@@ -1,0 +1,31 @@
+#!/bin/bash
+#SBATCH -J pi05_eval_mse_smoke
+#SBATCH -o /nfs_global/S/yangrongzheng/pi05/logs/pi05-eval-mse-smoke-%j.out
+#SBATCH -e /nfs_global/S/yangrongzheng/pi05/logs/pi05-eval-mse-smoke-%j.err
+#SBATCH -p r8nv-gpu
+#SBATCH --qos=gpu-short
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=8
+#SBATCH --mem=48G
+#SBATCH -t 0-00:30:00
+
+set -euo pipefail
+export PI05_REPO_ROOT=/nfs_global/S/yangrongzheng/pi05
+CONDA_SH="$(find /home/S/yangrongzheng/miniconda3* /nfs_global/S/yangrongzheng/miniconda3* -maxdepth 3 -name 'conda.sh' -path '*/etc/profile.d/*' 2>/dev/null | head -1)"
+source "${CONDA_SH}"
+conda activate "${PI05_REPO_ROOT}/.conda-pi05-openpi-final"
+export RECAP_WORKSPACE="${PI05_REPO_ROOT}/recap_workspace"
+export RLINF_ROOT="${PI05_REPO_ROOT}/recap_workspace/vendor/rlinf-recap"
+export RLINF_VENV_ROOT="${PI05_REPO_ROOT}/recap_workspace/.venv_recap311"
+export RLINF_VENV_SITE_PACKAGES="${PI05_REPO_ROOT}/recap_workspace/.venv_recap311/lib/python3.11/site-packages"
+export LIBERO_REPO_PATH="${PI05_REPO_ROOT}/recap_workspace/vendor/libero"
+source "${PI05_REPO_ROOT}/scripts/use_local_openpi_env.sh"
+cd "${PI05_REPO_ROOT}"
+python3 scripts/eval_mse.py \
+  --ckpt-dirs results/openpi_official_pytorch_full_checkpoints/pi05_pickplace_full_pytorch/pi05_pickplace_full_pytorch_eefdelta_v2_freshnorm_train/10000 \
+  --data-dir data/lerobot_pick_place \
+  --max-episodes 1 \
+  --num-steps 10 \
+  --device cuda

@@ -1,0 +1,72 @@
+#!/usr/bin/env bash
+
+if [[ -n "${_PI05_OLD_PYTHONPATH+x}" ]]; then
+  export PYTHONPATH="${_PI05_OLD_PYTHONPATH}"
+else
+  unset PYTHONPATH
+fi
+
+if [[ -n "${_PI05_OLD_LD_LIBRARY_PATH+x}" ]]; then
+  export LD_LIBRARY_PATH="${_PI05_OLD_LD_LIBRARY_PATH}"
+else
+  unset LD_LIBRARY_PATH
+fi
+
+if [[ -n "${_PI05_OLD_CUDA_RUNTIME_ROOT+x}" ]]; then
+  export CUDA_RUNTIME_ROOT="${_PI05_OLD_CUDA_RUNTIME_ROOT}"
+else
+  unset CUDA_RUNTIME_ROOT
+fi
+
+if [[ -n "${_PI05_OLD_PI05_CONDA_ENV_ROOT+x}" ]]; then
+  export PI05_CONDA_ENV_ROOT="${_PI05_OLD_PI05_CONDA_ENV_ROOT}"
+else
+  unset PI05_CONDA_ENV_ROOT
+fi
+
+if [[ -n "${_PI05_OLD_RLINF_ROOT+x}" ]]; then
+  export RLINF_ROOT="${_PI05_OLD_RLINF_ROOT}"
+else
+  unset RLINF_ROOT
+fi
+
+if [[ -n "${_PI05_OLD_RLINF_VENV_ROOT+x}" ]]; then
+  export RLINF_VENV_ROOT="${_PI05_OLD_RLINF_VENV_ROOT}"
+else
+  unset RLINF_VENV_ROOT
+fi
+
+if [[ -n "${_PI05_OLD_RLINF_VENV_SITE_PACKAGES+x}" ]]; then
+  export RLINF_VENV_SITE_PACKAGES="${_PI05_OLD_RLINF_VENV_SITE_PACKAGES}"
+else
+  unset RLINF_VENV_SITE_PACKAGES
+fi
+
+if [[ -n "${_PI05_OLD_LIBERO_REPO_PATH+x}" ]]; then
+  export LIBERO_REPO_PATH="${_PI05_OLD_LIBERO_REPO_PATH}"
+else
+  unset LIBERO_REPO_PATH
+fi
+
+if [[ -n "${_PI05_OLD_OPENPI_LOCAL_PYTHON+x}" ]]; then
+  export OPENPI_LOCAL_PYTHON="${_PI05_OLD_OPENPI_LOCAL_PYTHON}"
+else
+  unset OPENPI_LOCAL_PYTHON
+fi
+
+if [[ -n "${_PI05_OLD_OPENPI_LOCAL_REPO_ROOT+x}" ]]; then
+  export OPENPI_LOCAL_REPO_ROOT="${_PI05_OLD_OPENPI_LOCAL_REPO_ROOT}"
+else
+  unset OPENPI_LOCAL_REPO_ROOT
+fi
+
+unset _PI05_OLD_PYTHONPATH
+unset _PI05_OLD_LD_LIBRARY_PATH
+unset _PI05_OLD_CUDA_RUNTIME_ROOT
+unset _PI05_OLD_PI05_CONDA_ENV_ROOT
+unset _PI05_OLD_RLINF_ROOT
+unset _PI05_OLD_RLINF_VENV_ROOT
+unset _PI05_OLD_RLINF_VENV_SITE_PACKAGES
+unset _PI05_OLD_LIBERO_REPO_PATH
+unset _PI05_OLD_OPENPI_LOCAL_PYTHON
+unset _PI05_OLD_OPENPI_LOCAL_REPO_ROOT
